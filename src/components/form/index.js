@@ -3,37 +3,57 @@ import { useState } from "react";
 import { S } from "./style"
 
 
+
 function FormCalculator({ data }) {
+    const { setInfo } = data
     const [peso, setPeso] = useState('')
     const [altura, setAltura] = useState('')
+    const [error, setError] = useState('')
 
 
 
+    const handleError = () => {
+        if ((peso == 0 || peso > 350) && (altura == 0 || altura > 250)) {
+            setError('Digite uma altura e um peso correto')
+        } else if (peso == 0 || peso > 350) {
+            setError('Digite um peso correto')
+        } else {
+            setError('Digite uma altura correta')
+        }
+
+        setTimeout(() => {
+            setError('')
+        }, 4000)
+    }
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(peso)
-        console.log(altura)
-        setPeso('')
+        if (peso == 0 || peso > 350 || altura == 0 || altura > 300) return handleError()
+        const alturaMetro = altura / 100
+        const total = peso / (alturaMetro * alturaMetro)
+
+        setInfo({ imc: total.toFixed(2), peso: peso, altura: altura })
+
+
     }
 
     return (
 
-        <form onSubmit={handleSubmit}>
+        <S.Form onSubmit={handleSubmit}>
             <label htmlFor="peso">
-                <span>Peso</span>
-                <S.Input id="peso" type="number" name='Peso' value={peso} onChange={(e) => setPeso(e.target.value)} />
+                <S.Span>Peso</S.Span>
+                <S.Input id="peso" type="number" name='Peso' placeholder="KG" value={peso.toString() || ''} onChange={(e) => setPeso(e.target.value)} />
             </ label>
             <label htmlFor="altura">
-                <span>Altura</span>
-                <S.Input id="altura" type="number" name='Altura' value={altura} onChange={(e) => setAltura(e.target.value)} />
+                <S.Span>Altura</S.Span>
+                <S.Input id="altura" type="number" name='Altura' placeholder="CM" value={altura.toString() || ''} onChange={(e) => setAltura(e.target.value)} />
             </ label>
-            {/* <Input nome='peso' onChange={(e) => setPeso(e.target.value)} ></Input>
-            <Input nome='altura'></Input> */}
 
-            <button type="submit">Calcular</button>
-        </form>
+            <S.Div>{error}</S.Div>
+            <S.Button type="submit">Calcular</S.Button>
+
+        </S.Form>
     )
 }
 

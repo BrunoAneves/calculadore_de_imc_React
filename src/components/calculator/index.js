@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from "react"
 import { FormCalculator } from "../form"
-import { Resultado } from "../resultado"
+import { Result } from "../result"
 
 
 import { StyledCalculator } from "./style"
@@ -12,7 +12,7 @@ function Calculator() {
     return <>
         <StyledCalculator >
             <FormCalculator data={{ setInfo: setInfo }} />
-            <Resultado />
+            <Result data={{ ...info }} />
         </StyledCalculator>
     </>
 }

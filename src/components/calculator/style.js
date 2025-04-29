@@ -7,13 +7,16 @@ const StyledCalculator = styled.div`
 
 color: ${({ $color }) => $color ? $color : 'black'};
 
-margin: 0 auto;
+margin:  auto;
 display: flex;
 flex-direction: column;
 align-items:center;
-justify-content: center;
+justify-content: space-between;
+padding-block: 50px;
 width: 1000px;
+max-width: calc(100% - 40px);
 height: 800px;
+max-height: calc(100% - 40px);
 border-radius: 20px;
 background: white;
 `
